@@ -72,16 +72,6 @@ fastify.get("/", function (request, reply) {
   return reply.view("/src/index.hbs", params);
 });
 
-fastify.get("/qlik1234/admin", function (request, reply) {
-  
-  var sessions = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "sessions.json")));
-  var details = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "session-details.json")));
-  
-  let params = {sessions: sessions, details: details};
-
-  // The Handlebars code will be able to access the parameter values and build them into the page
-  return reply.view("/src/db.hbs", params);
-});
 
 /**
  * Our POST route to handle and react to form submissions
@@ -125,7 +115,6 @@ fastify.get("/api/sessions", function (request, reply) {
   var sessions = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "sessions.json")));
   var details = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "session-details.json")));
   
-  
   return reply.send({sessions: sessions, details: details});
 });
 
@@ -149,6 +138,10 @@ fastify.post("/api/sessions", function (request, reply) {
   
   
   return reply.send(out);
+});
+
+fastify.get("/qlik1234/admin", function (request, reply) {
+  return reply.view("/src/db.hbs");
 });
 
 // Run the server and report out to the logs
