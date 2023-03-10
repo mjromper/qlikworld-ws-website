@@ -19,7 +19,7 @@ function createCaptcha() {
   canv.height = 50;
   var ctx = canv.getContext("2d");
   ctx.font = "36px Georgia";
-  ctx.strokeStyle = "#0000ff";
+  ctx.strokeStyle = "#009845";
   ctx.strokeText(captcha.join(""), 0, 30);
   //storing captcha so that can validate you can save it somewhere else according to your specific requirements
   code = captcha.join("");

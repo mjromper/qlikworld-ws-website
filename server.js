@@ -3,6 +3,7 @@ const handlebars = require("handlebars");
 const axios = require("axios");
 var cloudshare = require("./src/cloudshare.js");
 var automations = require("./src/automations.js");
+var fs = require('fs');
 
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
@@ -39,13 +40,40 @@ fastify.register(require("@fastify/view"), {
  * Returns src/index.hbs with data built into it
  */
 fastify.get("/", function (request, reply) {
-  // params is an object we'll pass to our handlebars template
-  const sessions = require("./.data/sessions.json");
+  
+  
+  var sessions = JSON.parse(fs.readFileSync("./.data/sessions.json"));
+  
+  var sessionId = request.query.session;
+  
+  sessions.forEach(function(s){
+    if (sessionId && s.id === sessionId) {
+      s.selected = "selected";
+      s.disabled = "";
+    } else if(sessionId) {
+      s.selected = "";
+      s.disabled = "disabled";
+    } else {
+      s.selected = "";
+      s.disabled = "";
+    }
+  });
+  
 
-  let params = { sessions: sessions, get: true };
+  let params = { sessions: sessions};
+
+  return reply.view("/src/index.hbs", params);
+});
+
+fastify.get("/dbadmin", function (request, reply) {
+  
+  var sessions = JSON.parse(fs.readFileSync("./.data/sessions.json"));
+  var details = JSON.parse(fs.readFileSync("./.data/session-details.json"));
+  
+  let params = {sessions: sessions, details: details};
 
   // The Handlebars code will be able to access the parameter values and build them into the page
-  return reply.view("/src/index.hbs", params);
+  return reply.view("/src/db.hbs", params);
 });
 
 /**
@@ -54,8 +82,9 @@ fastify.get("/", function (request, reply) {
  * Accepts body data indicating the user choice
  */
 fastify.post("/submit", async function (request, reply) {
-  const sDetails = require("./.data/session-details.json");
-  const sessions = require("./.data/sessions.json");
+  
+  var sDetails = JSON.parse(fs.readFileSync("./.data/session-details.json"));
+  var sessions = JSON.parse(fs.readFileSync("./.data/sessions.json"));
 
   var email = request.body.email;
   var sessionId = request.body.session;
@@ -66,7 +95,7 @@ fastify.post("/submit", async function (request, reply) {
   var result;
 
   if (sessionId.indexOf("qcdi") !== -1) {
-    result = cloudshare.addStudentToClass(details, email);
+    result = await cloudshare.addStudentToClass(details, email);
   } else {
     result = await automations.runQlikAutomation(details, email);
   }
@@ -76,6 +105,43 @@ fastify.post("/submit", async function (request, reply) {
   } else {
     return reply.redirect("/done.html");
   }
+});
+
+
+/**
+ * Our home page route
+ *
+ * Returns src/index.hbs with data built into it
+ */
+fastify.get("/api/sessions", function (request, reply) {
+  
+  var sessions = JSON.parse(fs.readFileSync("./.data/sessions.json"));
+  var details = JSON.parse(fs.readFileSync("./.data/session-details.json"));
+  
+  
+  return reply.send({sessions: sessions, details: details});
+});
+
+fastify.post("/api/sessions", function (request, reply) {
+  
+  var sessions = request.body.sessions;
+  var details = request.body.details;
+  
+  var out = {};
+  var jsonContent;
+  if (sessions){
+    jsonContent = JSON.stringify(sessions, null, 2);
+    fs.writeFileSync("./.data/sessions.json", jsonContent, 'utf8');
+  }
+  
+  if (details){
+    jsonContent = JSON.stringify(details, null, 2);
+    fs.writeFileSync("./.data/session-details.json", jsonContent, 'utf8');
+    out.details = details;
+  }
+  
+  
+  return reply.send(out);
 });
 
 // Run the server and report out to the logs

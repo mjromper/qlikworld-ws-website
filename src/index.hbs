@@ -11,9 +11,12 @@
     <link rel="icon" href="https://www.qlik.com/assets/site/media/fav/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Qlik World 2023 - Workshops</title>
+    <title>QlikWorld 2023 - Hands-on sessions</title>
     
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+    
     <!-- Import the webpage's stylesheet -->
     <link rel="stylesheet" href="/style.css" />
     
@@ -22,39 +25,23 @@
   <script src="captcha.js"></script>
     
   </head>
-  <body>
+  <body onload="createCaptcha();">
     
-    {{#if post}}
+    
     <div class="wrapper">
+      <!--<img class="qlikLogo" src="https://www.qlik.com/us/-/media/images/qlik/global/qlik-logo-2x.png">-->
       <div class="content" role="main">
-
+        
+        <img style="width:100%;max-width: 1000px" src="https://cdn.glitch.global/cf4d6ca9-1b8d-41f5-84fd-d488b2c79139/qw23-communitypartner%20rail-1200x200.jpeg?v=1678376901723">
+        
+        
         <!-- This is the start of content for our page -->
-        <h1 class="lui-text-success">Great, an invitation email is on its way!!</h1>        
+        <h1 class="lui-text-success">Welcome to this QlikWorld hands-on session</h1>        
            
         <p>
-             Go to your inbox and follow the instructions in the email.
+            <b>Let's get you started!</b> please, fill the form and press Submit button.
         </p>
         
-        <p>
-            Thanks!
-        </p>
-        
-        
-
-      </div>
-    </div>
-    {{/if}}
-    
-    {{#if get}}
-    <div class="wrapper">
-      <div class="content" role="main">
-
-        <!-- This is the start of content for our page -->
-        <h1 class="lui-text-success">Welcome to Qlik World 2023!</h1>        
-           
-        <p>
-            This is the user registration page for Qlik World 2023 hands-on sessions.
-        </p>
         
         <div class="color-form">
 
@@ -63,12 +50,12 @@
           <form id="myform" class="color-search" method="post" action="/submit" onsubmit="return validateCaptcha()" autocomplete="off">
             <label for="session">
               <p>
-                Select workshop session:
+                Select this session:
               </p>
               <select class="lui-select" id="session" name="session" required="required" style="width:300px">
                 <option value="">-- Select --</option>
                 {{#each sessions}}
-                  <option value="{{this.id}}" {{this.disabled}} >{{this.name}}</option>
+                  <option value="{{this.id}}" {{this.disabled}} {{this.selected}}>{{this.name}}</option>
                 {{/each}}
 
               </select>
@@ -76,9 +63,9 @@
             <label for="email">
 
               <p>
-                Enter your email:
+                Your email:
               </p>
-              <input class="lui-input" id="email" name="email" required="required" type="text" style="width:300px"/>
+              <input class="lui-input" id="email" name="email" required="required" type="text" placeholder="name@company.com" style="width:300px"/>
               <div id="invalidemail" class="lui-text-danger" style="display:none;">
                 Invalid email, please try again.
               </div>
@@ -92,9 +79,7 @@
             <br>
             <div id="captcha"></div>
             <input type="text" class="lui-input" placeholder="Enter captcha" id="cpatchaTextBox" style="width:150px" required="required"/>
-            <script>
-              createCaptcha();
-            </script>
+            
             <!-- If the user submits a value through the form 
                  it'll be passed to the server in the request body  -->
             
@@ -102,7 +87,7 @@
                 Invalid captcha, please try again.
             </div>
             <br>
-            <button id="submitbtn" class="lui-button  lui-button--success" type="submit">Submit</button>
+            <button id="submitbtn" class="btn" type="submit">Submit</button>
           </form>
             
           
@@ -111,7 +96,6 @@
 
       </div>
     </div>
-    {{/if}}
     <!-- The footer holds our remix button — you can use it for structure or cut it out ✂ -->
     <footer class="footer">
       <div class="links"></div>
