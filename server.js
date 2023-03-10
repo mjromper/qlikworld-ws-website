@@ -5,12 +5,17 @@ var cloudshare = require("./src/cloudshare.js");
 var automations = require("./src/automations.js");
 var fs = require('fs');
 
-const DATAFOLDER = './.data';
+const DATAFOLDER = process.env.DATAFOLDER || './.data';
 
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
-  // Set this to true for detailed logging:
+  
   logger: false,
+  /*https: {
+    allowHTTP1: true,
+    key: fs.readFileSync(path.join(__dirname, DATAFOLDER, "server.key")),
+    cert: fs.readFileSync(path.join(__dirname, DATAFOLDER, "server.cert"))
+  }*/
 });
 
 // Setup our static files
