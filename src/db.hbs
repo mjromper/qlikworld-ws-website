@@ -1,0 +1,127 @@
+<html lang="en">
+  <head>
+
+    <!-- 
+      This is the main Handlebars template for the site 
+      - When the user visits the homepage or submits a color the app calls the endpoints in server.js
+      - The server script passes data in here and the Handlebars code builds it into the HTML page
+    -->
+
+    <meta charset="utf-8" />
+    <link rel="icon" href="https://www.qlik.com/assets/site/media/fav/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>QlikWorld 2023 - Hands-on sessions</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+    
+    <!-- when using the mode "code", it's important to specify charset utf-8 -->
+    <meta charset="utf-8">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.0/jsoneditor.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.0/jsoneditor.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/leonardo-ui/dist/leonardo-ui.css" type="text/css"/>
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
+    
+  </head>
+  <body>
+    
+    <div class="wrapper" style="display: block;">
+      <div >
+          <p class="lui-text-danger">
+            <i>IMPORTANT:</i> For each of the sessions list <i>id</i> items (left) there has to be one details object (right).
+          </p>
+          <div style="display: inline-block;width: 600px; ">
+              <h1>Session List<button id="savesessions" class="lui-button  lui-button--success" style="margin-left: 7px;display: none;" onclick="save('sessions')">Update</button></h1>
+              <div id="sessions" style="width: 600px; height: 80%;"></div>
+          </div>
+
+          <div style="padding-left: 40px;display: inline-block;width: 800px;">
+              <h1>Session Details <button id="savedetails" class="lui-button  lui-button--success" style="margin-left: 7px;display: none;" onclick="save('details')">Update</button></h1>
+              <div id="details" style="width: 800px; height: 80%;"></div>
+          </div>
+      </div>
+    </div>
+    
+    
+  
+
+    <script>
+        
+        var updatedSessions;
+        var updatedDetails;
+      
+        // create the editor
+        const container = document.getElementById("sessions");
+        const container2 = document.getElementById("details");
+        var options = {
+          mode: 'code',
+          //modes: ['code', 'form', 'tree'],
+          name: "Sessions",
+          onChange: function(){
+            console.log("sessions", editor.get());
+            document.getElementById("savesessions").style.display = "inline";
+          }
+        };
+        const editor = new JSONEditor(container, options);
+        var options2 = {
+          mode: 'code',
+          //modes: ['code', 'form', 'tree'],
+          name: "Details",
+          onChange: function(){
+            console.log("details", editor2.get());
+            document.getElementById("savedetails").style.display = "inline";
+          }
+        };
+        const editor2 = new JSONEditor(container2, options2)
+        
+        fetch("/api/sessions")
+          .then((response) => response.json())
+          .then((data) => {
+                    
+          editor.set(data.sessions);
+          editor2.set(data.details);
+          
+        
+        });
+      
+      
+      
+      function save(file){
+        
+        var o;
+        if (file === 'sessions'){
+          o = {"sessions":editor.get()};
+        }
+      
+        if (file === 'details'){
+          o = {"details":editor2.get()};
+        }
+        
+        fetch("/api/sessions", {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(o),
+        }).then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          
+          
+            document.getElementById("save"+file).style.display = "none";
+        }).catch((error) => {
+            console.error("Error:", error);
+        });
+      }
+
+        
+        
+    </script>
+  
+    
+  </body>
+</html>
