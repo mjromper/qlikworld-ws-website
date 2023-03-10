@@ -38,7 +38,10 @@ function validateEmail() {
 
 function validateCaptcha() {
   //event.preventDefault();
-
+  
+  document.getElementById("spinner").style.display = "block";
+  document.getElementById("submitbtn").style.display = "none";
+  
   document.getElementById("invalidcaptcha").style.display = "none";
   document.getElementById("invalidemail").style.display = "none";
 

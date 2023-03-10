@@ -67,7 +67,7 @@ fastify.get("/", function (request, reply) {
   return reply.view("/src/index.hbs", params);
 });
 
-fastify.get("/dbadmin", function (request, reply) {
+fastify.get("/qlik1234/admin", function (request, reply) {
   
   var sessions = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "sessions.json")));
   var details = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "session-details.json")));

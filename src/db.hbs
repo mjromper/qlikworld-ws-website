@@ -22,20 +22,22 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.0/jsoneditor.css" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.10.0/jsoneditor.min.js"></script>
-    <link rel="stylesheet" href="node_modules/leonardo-ui/dist/leonardo-ui.css" type="text/css"/>
+    <link rel="stylesheet" href="../node_modules/leonardo-ui/dist/leonardo-ui.css" type="text/css"/>
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
     
   </head>
   <body>
     
     
     <div style="display: inline-block;width: 600px; ">
-        <h1>Sessions <button id="savesessions" class="lui-button  lui-button--success" style="display: none;" onclick="save('sessions')">Update</button></h1>
-    <div id="sessions" style="width: 600px; height: 90%;"></div>
+        <h1>Session List<button id="savesessions" class="lui-button  lui-button--success" style="margin-left: 7px;display: none;" onclick="save('sessions')">Update</button></h1>
+        <div id="sessions" style="width: 600px; height: 80%;"></div>
     </div>
     
-    <div style="display: inline-block;width: 800px;">
-        <h1>Sessions Details <button id="savedetails" class="lui-button  lui-button--success" style="display: none;" onclick="save('details')">Update</button></h1>
-    <div id="details" style="width: 800px; height: 90%;"></div>
+    <div style="padding-left: 40px;display: inline-block;width: 800px;">
+        <h1>Session Details <button id="savedetails" class="lui-button  lui-button--success" style="margin-left: 7px;display: none;" onclick="save('details')">Update</button></h1>
+    <div id="details" style="width: 800px; height: 80%;"></div>
     </div>
     
     
