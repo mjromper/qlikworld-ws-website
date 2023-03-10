@@ -5,6 +5,8 @@ var cloudshare = require("./src/cloudshare.js");
 var automations = require("./src/automations.js");
 var fs = require('fs');
 
+const DATAFOLDER = './.data';
+
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
   // Set this to true for detailed logging:
@@ -42,7 +44,7 @@ fastify.register(require("@fastify/view"), {
 fastify.get("/", function (request, reply) {
   
   
-  var sessions = JSON.parse(fs.readFileSync("./.data/sessions.json"));
+  var sessions = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "sessions.json")));
   
   var sessionId = request.query.session;
   
@@ -67,8 +69,8 @@ fastify.get("/", function (request, reply) {
 
 fastify.get("/dbadmin", function (request, reply) {
   
-  var sessions = JSON.parse(fs.readFileSync("./.data/sessions.json"));
-  var details = JSON.parse(fs.readFileSync("./.data/session-details.json"));
+  var sessions = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "sessions.json")));
+  var details = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "session-details.json")));
   
   let params = {sessions: sessions, details: details};
 
@@ -83,9 +85,9 @@ fastify.get("/dbadmin", function (request, reply) {
  */
 fastify.post("/submit", async function (request, reply) {
   
-  var sDetails = JSON.parse(fs.readFileSync("./.data/session-details.json"));
-  var sessions = JSON.parse(fs.readFileSync("./.data/sessions.json"));
-
+  var sessions = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "sessions.json")));
+  var sDetails = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "session-details.json")));
+  
   var email = request.body.email;
   var sessionId = request.body.session;
 
@@ -115,8 +117,8 @@ fastify.post("/submit", async function (request, reply) {
  */
 fastify.get("/api/sessions", function (request, reply) {
   
-  var sessions = JSON.parse(fs.readFileSync("./.data/sessions.json"));
-  var details = JSON.parse(fs.readFileSync("./.data/session-details.json"));
+  var sessions = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "sessions.json")));
+  var details = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "session-details.json")));
   
   
   return reply.send({sessions: sessions, details: details});
@@ -131,12 +133,12 @@ fastify.post("/api/sessions", function (request, reply) {
   var jsonContent;
   if (sessions){
     jsonContent = JSON.stringify(sessions, null, 2);
-    fs.writeFileSync("./.data/sessions.json", jsonContent, 'utf8');
+    fs.writeFileSync(path.join(__dirname, DATAFOLDER, "sessions.json"), jsonContent, 'utf8');
   }
   
   if (details){
     jsonContent = JSON.stringify(details, null, 2);
-    fs.writeFileSync("./.data/session-details.json", jsonContent, 'utf8');
+    fs.writeFileSync(path.join(__dirname, DATAFOLDER, "session-details.json"), jsonContent, 'utf8');
     out.details = details;
   }
   
