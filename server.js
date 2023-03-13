@@ -1,20 +1,12 @@
 const path = require("path");
 const handlebars = require("handlebars");
-const axios = require("axios");
 var cloudshare = require("./src/cloudshare.js");
 var automations = require("./src/automations.js");
 var fs = require('fs');
+var myS3 = require('./src/s3.js');
 
 const DATAFOLDER = process.env.DATAFOLDER || './.data';
 
-
-if (!fs.existsSync(path.join(__dirname, DATAFOLDER, "sessions.json"))){
-  fs.writeFileSync(path.join(__dirname, DATAFOLDER, "sessions.json"), JSON.stringify({}, null, 2), 'utf8');
-}
-
-if (!fs.existsSync(path.join(__dirname, DATAFOLDER, "session-details.json"))){
-  fs.writeFileSync(path.join(__dirname, DATAFOLDER, "session-details.json"), JSON.stringify({}, null, 2), 'utf8');
-}
 
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
@@ -58,7 +50,7 @@ fastify.register(require("@fastify/view"), {
 fastify.get("/", function (request, reply) {
   
   
-  var sessions = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "sessions.json")));
+  var sessions = myS3.read( "sessions.json");
   
   var sessionId = request.query.session;
   
