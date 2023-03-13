@@ -9,11 +9,11 @@ const DATAFOLDER = process.env.DATAFOLDER || './.data';
 
 
 if (!fs.existsSync(path.join(__dirname, DATAFOLDER, "sessions.json"))){
-  fs.writeFileSync(path.join(__dirname, DATAFOLDER, "sessions.json"), {}, 'utf8');
+  fs.writeFileSync(path.join(__dirname, DATAFOLDER, "sessions.json"), JSON.stringify({}, null, 2), 'utf8');
 }
 
 if (!fs.existsSync(path.join(__dirname, DATAFOLDER, "session-details.json"))){
-  fs.writeFileSync(path.join(__dirname, DATAFOLDER, "session-details.json"), {}, 'utf8');
+  fs.writeFileSync(path.join(__dirname, DATAFOLDER, "session-details.json"), JSON.stringify({}, null, 2), 'utf8');
 }
 
 // Require the fastify framework and instantiate it
@@ -98,7 +98,6 @@ fastify.get("/done", function (request, reply) {
  */
 fastify.post("/submit", async function (request, reply) {
   
-  var sessions = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "sessions.json")));
   var sDetails = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "session-details.json")));
   
   var email = request.body.email;
