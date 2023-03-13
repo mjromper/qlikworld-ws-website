@@ -5,7 +5,7 @@ var automations = require("./src/automations.js");
 var fs = require('fs');
 var myS3 = require('./src/s3.js');
 
-const DATAFOLDER = process.env.DATAFOLDER || './.data';
+//const DATAFOLDER = process.env.DATAFOLDER || './.data';
 
 
 // Require the fastify framework and instantiate it
