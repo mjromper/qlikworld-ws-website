@@ -39,14 +39,14 @@ function validateEmail() {
 function validateCaptcha() {
   //event.preventDefault();
   
-  document.getElementById("spinner").style.display = "block";
-  document.getElementById("submitbtn").style.display = "none";
   
   document.getElementById("invalidcaptcha").style.display = "none";
   document.getElementById("invalidemail").style.display = "none";
 
   if (validateEmail()) {
     if (document.getElementById("cpatchaTextBox").value == code) {
+      document.getElementById("spinner").style.display = "block";
+      document.getElementById("submitbtn").style.display = "none";
       return true;
     } else {
       document.getElementById("cpatchaTextBox").value = "";

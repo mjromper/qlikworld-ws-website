@@ -73,6 +73,15 @@ fastify.get("/", function (request, reply) {
 });
 
 
+fastify.get("/error", function (request, reply) {
+  return reply.view("/src/result.hbs", {"error": true});
+});
+
+fastify.get("/done", function (request, reply) {
+  return reply.view("/src/result.hbs", {"done": true});
+});
+
+
 /**
  * Our POST route to handle and react to form submissions
  *
@@ -98,9 +107,9 @@ fastify.post("/submit", async function (request, reply) {
   }
 
   if (result.error) {
-    return reply.redirect("/error.html");
+    return reply.redirect("/error");
   } else {
-    return reply.redirect("/done.html");
+    return reply.redirect("/done");
   }
 });
 
