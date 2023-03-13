@@ -50,7 +50,7 @@ fastify.register(require("@fastify/view"), {
 fastify.get("/", function (request, reply) {
   
   
-  var sessions = myS3.read( "sessions.json");
+  var sessions = myS3.read( "sessions.json", true);
   
   var sessionId = request.query.session;
   
@@ -90,7 +90,7 @@ fastify.get("/done", function (request, reply) {
  */
 fastify.post("/submit", async function (request, reply) {
   
-  var sDetails = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "session-details.json")));
+  var sDetails = myS3.read( "session-details.json");
   
   var email = request.body.email;
   var sessionId = request.body.session;
@@ -121,8 +121,8 @@ fastify.post("/submit", async function (request, reply) {
  */
 fastify.get("/api/sessions", function (request, reply) {
   
-  var sessions = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "sessions.json")));
-  var details = JSON.parse(fs.readFileSync(path.join(__dirname, DATAFOLDER, "session-details.json")));
+  var sessions = myS3.read( "sessions.json", true);
+  var details = myS3.read( "session-details.json");
   
   return reply.send({sessions: sessions, details: details});
 });
@@ -136,12 +136,12 @@ fastify.post("/api/sessions", function (request, reply) {
   var jsonContent;
   if (sessions){
     jsonContent = JSON.stringify(sessions, null, 2);
-    fs.writeFileSync(path.join(__dirname, DATAFOLDER, "sessions.json"), jsonContent, 'utf8');
+    myS3.store("sessions.json", jsonContent);
   }
   
   if (details){
     jsonContent = JSON.stringify(details, null, 2);
-    fs.writeFileSync(path.join(__dirname, DATAFOLDER, "session-details.json"), jsonContent, 'utf8');
+    myS3.store("session-details.json", jsonContent);
     out.details = details;
   }
   
