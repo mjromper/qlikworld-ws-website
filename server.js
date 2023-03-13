@@ -7,6 +7,15 @@ var fs = require('fs');
 
 const DATAFOLDER = process.env.DATAFOLDER || './.data';
 
+
+if (!fs.existsSync(path.join(__dirname, DATAFOLDER, "sessions.json"))){
+  fs.writeFileSync(path.join(__dirname, DATAFOLDER, "sessions.json"), {}, 'utf8');
+}
+
+if (!fs.existsSync(path.join(__dirname, DATAFOLDER, "session-details.json"))){
+  fs.writeFileSync(path.join(__dirname, DATAFOLDER, "session-details.json"), {}, 'utf8');
+}
+
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
   
