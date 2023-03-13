@@ -134,12 +134,11 @@ fastify.post("/api/sessions", async function (request, reply) {
   
   var out = {};
   if (sessions){
-    await myS3.store("sessions.json", sessions);
+    out.sessions = await myS3.store("sessions.json", sessions);
   }
   
   if (details){
-    await myS3.store("session-details.json", details);
-    out.details = details;
+    out.details = await myS3.store("session-details.json", details);
   }
   
   
