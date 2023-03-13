@@ -5,7 +5,7 @@ const s3 = new AWS.S3();
 async function  store( fileKey, data ) {
     // store something
     return await s3.putObject({
-        Body: JSON.stringify(data),
+        Body: JSON.stringify(data, null, 2),
         Bucket: "cyclic-busy-plum-bull-robe-eu-north-1",
         Key: fileKey,
     }).promise()
