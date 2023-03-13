@@ -3,23 +3,27 @@ const s3 = new AWS.S3();
 
 
 async function  store( fileKey, data ) {
-
-    console.log("data to store", data);
+    let key = `datafiles/${fileKey}`;
+    console.log("data to store", data, key);
+    console.log("stringify data", JSON.stringify(data));
     // store something
-    return await s3.putObject({
+    var result = await s3.putObject({
         Body: JSON.stringify(data),
-        Bucket: "cyclic-busy-plum-bull-robe-eu-north-1",
-        Key: `datafiles/${fileKey}`,
+        Bucket: process.env.CYCLIC_BUCKET_NAME,
+        Key: key,
     }).promise()
+    return result;
 
 }
 
 async function  read( fileKey, isArray ) {
+    let key = `datafiles/${fileKey}`;
 
+    console.log("reading key", key);
     try {
         let my_file = await s3.getObject({
-            Bucket: "cyclic-busy-plum-bull-robe-eu-north-1",
-            Key: `datafiles/${fileKey}`,
+            Bucket: process.env.CYCLIC_BUCKET_NAME,
+            Key: key,
         }).promise();
         return JSON.parse(my_file)
     } catch (e) {
