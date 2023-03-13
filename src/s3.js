@@ -7,7 +7,7 @@ async function  store( fileKey, data ) {
     console.log("data to store", data);
     // store something
     return await s3.putObject({
-        Body: JSON.stringify(data, null, 2),
+        Body: JSON.stringify(data),
         Bucket: "cyclic-busy-plum-bull-robe-eu-north-1",
         Key: `datafiles/${fileKey}`,
     }).promise()
