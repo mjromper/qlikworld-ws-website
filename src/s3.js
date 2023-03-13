@@ -7,7 +7,7 @@ async function  store( fileKey, data ) {
     // store something
     var result = await s3.putObject({
         Body: JSON.stringify(data, null, 2),
-        Bucket: process.env.CYCLIC_BUCKET_NAME,
+        Bucket: process.env.CYCLIC_BUCKET_NAME || "cyclic-busy-plum-bull-robe-eu-north-1",
         Key: key,
     }).promise()
     return result;
@@ -18,7 +18,7 @@ async function  read( fileKey, isArray ) {
     let key = `datafiles/${fileKey}`;
     try {
         let my_file = await s3.getObject({
-            Bucket: process.env.CYCLIC_BUCKET_NAME,
+            Bucket: process.env.CYCLIC_BUCKET_NAME || "cyclic-busy-plum-bull-robe-eu-north-1",
             Key: key,
         }).promise();
 
