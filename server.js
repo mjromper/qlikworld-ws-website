@@ -145,7 +145,7 @@ fastify.post("/api/sessions", async function (request, reply) {
   return reply.send(out);
 });
 
-fastify.get("/qlik1234/admin", function (request, reply) {
+fastify.get("/admin", function (request, reply) {
   return reply.view("/src/db.hbs");
 });
 
