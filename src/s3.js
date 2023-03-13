@@ -25,6 +25,8 @@ async function  read( fileKey, isArray ) {
             Bucket: process.env.CYCLIC_BUCKET_NAME,
             Key: key,
         }).promise();
+
+        console.log("my_file", my_file);
         return JSON.parse(my_file)
     } catch (e) {
         console.log("error", e);
