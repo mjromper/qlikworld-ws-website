@@ -127,19 +127,18 @@ fastify.get("/api/sessions", async function (request, reply) {
   return reply.send({sessions: sessions, details: details});
 });
 
-fastify.post("/api/sessions", function (request, reply) {
+fastify.post("/api/sessions", async function (request, reply) {
   
   var sessions = request.body.sessions;
   var details = request.body.details;
   
   var out = {};
-  var jsonContent;
   if (sessions){
-    myS3.store("sessions.json", jsonContent);
+    await myS3.store("sessions.json", sessions);
   }
   
   if (details){
-    myS3.store("session-details.json", jsonContent);
+    await myS3.store("session-details.json", details);
     out.details = details;
   }
   
