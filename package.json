@@ -1,5 +1,5 @@
 {
-  "name": "glitch-hello-node",
+  "name": "qlikworld-ws-website",
   "version": "0.1.0",
   "description": "A simple Node app built on fastify, instantly up and running. Built to be remixed on Glitch.com.",
   "main": "server.js",
@@ -14,7 +14,8 @@
     "fastify": "^4.11.0",
     "handlebars": "^4.7.7",
     "leonardo-ui": "^1.7.1",
-    "js-sha1": "^0.6.0"
+    "js-sha1": "^0.6.0",
+    "aws-sdk": "2.1333.0"
   },
   "engines": {
     "node": "14.x"
