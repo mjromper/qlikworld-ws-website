@@ -26,7 +26,7 @@ async function  read( fileKey, isArray ) {
             Key: key,
         }).promise();
 
-        console.log("my_file", my_file);
+        console.log("my_file", my_file.Body);
         return JSON.parse(my_file)
     } catch (e) {
         console.log("error", e);
