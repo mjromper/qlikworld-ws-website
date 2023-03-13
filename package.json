@@ -10,12 +10,12 @@
     "@fastify/formbody": "^7.4.0",
     "@fastify/static": "^6.6.0",
     "@fastify/view": "^7.3.0",
+    "aws-sdk": "2.1333.0",
     "axios": "1.2.2",
     "fastify": "^4.11.0",
     "handlebars": "^4.7.7",
-    "leonardo-ui": "^1.7.1",
     "js-sha1": "^0.6.0",
-    "aws-sdk": "2.1333.0"
+    "leonardo-ui": "^1.7.1"
   },
   "engines": {
     "node": "14.x"
