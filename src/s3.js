@@ -13,18 +13,19 @@ async function  store( fileKey, data ) {
 }
 
 async function  read( fileKey, isArray ) {
-    let my_file = await s3.getObject({
-        Bucket: "cyclic-busy-plum-bull-robe-eu-north-1",
-        Key: fileKey,
-    }).promise();
 
-
-    if ( my_file ) {
-        JSON.parse(my_file)
-    } else {
+    try {
+        let my_file = await s3.getObject({
+            Bucket: "cyclic-busy-plum-bull-robe-eu-north-1",
+            Key: fileKey,
+        }).promise();
+        return JSON.parse(my_file)
+    } catch {
         return isArray? [] : {};
-    }
+    };
+    
 }
+
 
 
 module.exports.store = store;
