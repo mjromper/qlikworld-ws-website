@@ -24,12 +24,14 @@
 
     <link
       rel="stylesheet"
-      href="node_modules/leonardo-ui/dist/leonardo-ui.css"
+      href="/node_modules/leonardo-ui/dist/leonardo-ui.css"
       type="text/css"
     />
   </head>
   <body>
     <div class="wrapper">
+      
+      {{#if done}}
       <!--<img class="qlikLogo" src="https://www.qlik.com/us/-/media/images/qlik/global/qlik-logo-2x.png">-->
       <div class="content" role="main">
         
@@ -38,11 +40,37 @@
         <h1 class="lui-text-success">
           Great, an invitation email is on its way!!
         </h1>
-
+      
         <p>Go to your inbox and follow the instructions in the email.</p>
 
         <p>Thanks!</p>
+        
+        
+        <p>
+          <button type="button" onclick="window.close();">You can close this window now</button>
+        </p>
       </div>
+      {{/if}}
+      
+      
+      {{#if error}}
+      <!--<img class="qlikLogo" src="https://www.qlik.com/us/-/media/images/qlik/global/qlik-logo-2x.png">-->
+      <div class="content" role="main">
+        
+        <img style="width:100%;max-width: 1000px" src="https://cdn.glitch.global/cf4d6ca9-1b8d-41f5-84fd-d488b2c79139/qw23-communitypartner%20rail-1200x200.jpeg?v=1678376901723">
+
+        <!-- This is the start of content for our page -->
+        <h1 class="lui-text-danger">Oops, something went wrong</h1>        
+           
+        <p>
+             Please, ask the session owner for assistance.
+        </p>
+      
+        
+
+      </div>
+      {{/if}}
+      
     </div>
 
     <!-- The footer holds our remix button — you can use it for structure or cut it out ✂ -->
