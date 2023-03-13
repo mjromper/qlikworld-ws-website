@@ -5,10 +5,10 @@ const s3 = new AWS.S3();
 async function  store( fileKey, data ) {
     let key = `datafiles/${fileKey}`;
     console.log("data to store", data, key);
-    console.log("stringify data", JSON.stringify(data));
+    console.log("stringify data", JSON.stringify(data, null, 2));
     // store something
     var result = await s3.putObject({
-        Body: JSON.stringify(data),
+        Body: JSON.stringify(data, null, 2),
         Bucket: process.env.CYCLIC_BUCKET_NAME,
         Key: key,
     }).promise()
@@ -26,8 +26,8 @@ async function  read( fileKey, isArray ) {
             Key: key,
         }).promise();
 
-        console.log("my_file", my_file.Body);
-        return JSON.parse(my_file.Body)
+        console.log("my_file", my_file.Body.toString());
+        return JSON.parse(my_file.Body.toString())
     } catch (e) {
         console.log("error", e);
         return isArray? [] : {};
