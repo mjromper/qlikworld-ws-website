@@ -8,6 +8,7 @@ to this section's matching END comment to see page-specific styles.
 ******************************************************************************/
 /* Our default values set as CSS variables */
 
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
 
 /* Basic page style resets */
 * {
@@ -22,6 +23,7 @@ to this section's matching END comment to see page-specific styles.
   src: url(node_modules/leonardo-ui/dist/lui-icons.woff) format('woff'),
      url(node_modules/leonardo-ui/dist/lui-icons.ttf) format('truetype');
 }
+
 
 /* Our remix on glitch button */
 .btn--remix {
