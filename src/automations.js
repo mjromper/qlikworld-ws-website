@@ -21,7 +21,7 @@ async function runQlikAutomation(details, email) {
 
     return result.data;
   } catch (error) {
-    return error;
+    return {error: error};
   }
 }
 

@@ -98,15 +98,16 @@ fastify.post("/submit", async function (request, reply) {
   console.log(`Event for sessionId '${sessionId}' and user '${email}'`);
 
   var details = sDetails[sessionId];
-  var result;
-
-  if (sessionId.indexOf("qcdi") !== -1) {
-    result = await cloudshare.addStudentToClass(details, email);
-  } else {
-    result = await automations.runQlikAutomation(details, email);
+  var result1, result2;
+  
+  if (details && details['classId'] ) {
+    result1 = await cloudshare.addStudentToClass(details, email);
+  } 
+  if (details && details['url']) {
+    result2 = await automations.runQlikAutomation(details, email);
   }
 
-  if (result.error) {
+  if (result1 && result1.error || result2 && result2.error) {
     return reply.redirect("/error");
   } else {
     return reply.redirect("/done");
