@@ -117,10 +117,6 @@ body {
   margin: 20px;
 }
 
-p {
-  font-size: 1.25rem;
-}
-
 /* Title h1 style */
 .title {
   color: #61a729;
@@ -146,9 +142,6 @@ p {
 /* Styles for our custom color form and its results */
 .color-info {
   margin-left: 5px;
-}
-.color-search {
-  margin-top: 3rem;
 }
 .color-form {
   width: 90%;
@@ -191,9 +184,6 @@ label {
 }
 .instructions p {
   font-size: 1rem;
-}
-h2 {
-  color: #2800FF;
 }
 
 canvas{
@@ -259,4 +249,15 @@ canvas{
   100% {
     transform: rotate(360deg);
   }
+}
+
+.lui-select {
+  height: 38px !important;
+  font-size: 16px;
+}
+
+
+.lui-input {
+  height: 38px !important;
+  font-size: 16px;
 }
