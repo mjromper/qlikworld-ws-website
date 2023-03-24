@@ -55,7 +55,7 @@ to this section's matching END comment to see page-specific styles.
 .footer {
   display: flex;
   justify-content: space-between;
-  margin: 50px auto;
+  margin: 50px auto 0px auto;
   padding: 1.5rem 0 0.75rem 0;
   width: 100%;
   max-width: 1000px;
@@ -104,7 +104,9 @@ body {
   min-height: var(--wrapper-height);
   display: grid;
   /*place-items: center;*/
-  margin: 20px 1rem;
+  max-width: 1000px;
+  border: 3px solid #006580;
+  margin: 0px auto;
 }
 .content {
   display: flex;
@@ -112,6 +114,7 @@ body {
   align-items: left;
   justify-content: left;
   place-items: center;
+  margin: 20px;
 }
 
 p {
