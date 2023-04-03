@@ -77,7 +77,7 @@ fastify.get("/", async function (request, reply) {
   });
   
 
-  let params = { sessions: sessions};
+  let params = { sessions: sessions, sessionId: sessionId};
 
   return reply.view("/src/index.hbs", params);
 });

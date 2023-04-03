@@ -39,12 +39,12 @@
       </h2>
 
 
-      <div class="color-form">
+      <div class="color-form" style="display: grid;gap: 40px;">
 
         <!-- The "What's your favorite color?" form sends a POST request to the server
                Check server.js to see how it works -->
         <form id="myform" class="color-search" method="post" action="/submit" onsubmit="return validateCaptcha()"
-          autocomplete="off">
+          autocomplete="off" style="grid-row: 1;">
           <p for="session">
               Select this session:
           </p>
@@ -94,8 +94,14 @@
 
         </form>
 
+        <div style="grid-row: 1;">
+          <img style="width:100%;max-width: 1000px" src="img/{{sessionId}}.png">
+        </div>
+
 
       </div>
+
+      
 
 
 
