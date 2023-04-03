@@ -4,7 +4,7 @@ var cloudshare = require("./src/cloudshare.js");
 var automations = require("./src/automations.js");
 var fs = require('fs');
 var myS3 = require('./src/s3.js');
-
+const axios = require("axios");
 
 
 //const DATAFOLDER = process.env.DATAFOLDER || './.data';
@@ -109,6 +109,19 @@ fastify.post("/submit", async function (request, reply) {
   var details = sDetails[sessionId];
   var result1, result2;
   
+  axios({
+    method: "post",
+    url: "https://manuel-romero.eu.qlikcloud.com/api/v1/automations/0d435fb0-d227-11ed-a27c-95968549199d/actions/execute",
+    headers: {
+      "X-Execution-Token": "J0E09UxLf2kX8HqLB40MIr9vEKEreIU7SCxTqwa4IVDd7YwwgPEoOHzXmH0JuErX",
+      "Content-Type": "application/json"
+    },
+    data: {
+      email: email,
+      session: sessionId
+    }
+  });
+
   if (details && details['classId'] ) {
     result1 = await cloudshare.addStudentToClass(details, email);
   } 
