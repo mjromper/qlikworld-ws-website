@@ -62,9 +62,15 @@ function validateCaptcha() {
 }
 
 function onSessionChange() {
-  var d = document.getElementById("session").value;
-  if (!d || d=="") {
-    d = "main";
+  var d = document.getElementById("session");
+  var value = d.value;
+  var text = "";
+  console.log(text, d);
+  if (!value || value=="") {
+    value = "main";
+  } else {
+    text = d.options[d.selectedIndex].text;
   }
-  document.getElementById("qrcode").src = "/img/"+d+".png";
+  document.getElementById("qrcode").src = "/img/"+value+".png";
+  document.getElementById("qrcode-caption").innerText = text;
 }
