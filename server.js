@@ -62,9 +62,10 @@ fastify.get("/", async function (request, reply) {
   var sessions = await myS3.read( "sessions.json", true);
   
   var sessionId = request.query.session;
-  
+  var found = false;
   sessions.forEach(function(s){
     if (sessionId && s.id === sessionId) {
+      found = true
       s.selected = "selected";
       s.disabled = "";
     } else if(sessionId) {
@@ -75,9 +76,8 @@ fastify.get("/", async function (request, reply) {
       s.disabled = "";
     }
   });
-  
 
-  let params = { sessions: sessions, sessionId: sessionId};
+  let params = { sessions: sessions, sessionId: found? sessionId : "main"};
 
   return reply.view("/src/index.hbs", params);
 });

@@ -60,3 +60,11 @@ function validateCaptcha() {
     return false;
   }
 }
+
+function onSessionChange() {
+  var d = document.getElementById("session").value;
+  if (!d || d=="") {
+    d = "main";
+  }
+  document.getElementById("qrcode").src = "/img/"+d+".png";
+}

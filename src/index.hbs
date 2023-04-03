@@ -17,7 +17,7 @@
 
   <link rel="stylesheet" href="node_modules/leonardo-ui/dist/leonardo-ui.css" type="text/css" />
   <script src="captcha.js"></script>
-    <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css" />
 
 
 </head>
@@ -48,7 +48,7 @@
           <p for="session">
               Select this session:
           </p>
-          <select class="lui-select" id="session" name="session" required="required" style="width:300px">
+          <select onChange="onSessionChange();" class="lui-select" id="session" name="session" required="required" style="width:300px">
             <option value="">-- Select --</option>
             {{#each sessions}}
             <option value="{{this.id}}" {{this.disabled}} {{this.selected}}>{{this.name}}</option>
@@ -95,7 +95,7 @@
         </form>
 
         <div style="grid-row: 1;">
-          <img style="width:100%;max-width: 1000px" src="img/{{sessionId}}.png">
+          <img id="qrcode" style="width:100%;max-width: 1000px" src="img/{{sessionId}}.png">
         </div>
 
 
