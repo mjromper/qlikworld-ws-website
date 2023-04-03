@@ -261,3 +261,9 @@ canvas{
   height: 38px !important;
   font-size: 16px;
 }
+
+@media screen and (max-width: 700px) {
+  .yourClass {
+      display: none !important;
+  }
+}
