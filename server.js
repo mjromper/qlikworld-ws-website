@@ -5,6 +5,8 @@ var automations = require("./src/automations.js");
 var fs = require('fs');
 var myS3 = require('./src/s3.js');
 
+
+
 //const DATAFOLDER = process.env.DATAFOLDER || './.data';
 
 
@@ -18,6 +20,13 @@ const fastify = require("fastify")({
     cert: fs.readFileSync(path.join(__dirname, DATAFOLDER, "server.cert"))
   }*/
 });
+const authenticate = {realm: 'QlikWorld'};
+fastify.register(require('@fastify/basic-auth'), { validate, authenticate });
+async function validate (username, password, req, reply) {
+  if (username !== 'admin' || password !== 'QlikWorld23!!') {
+    return new Error('Winter is coming')
+  }
+}
 
 // Setup our static files
 fastify.register(require("@fastify/static"), {
@@ -146,8 +155,19 @@ fastify.post("/api/sessions", async function (request, reply) {
   return reply.send(out);
 });
 
-fastify.get("/admin", function (request, reply) {
+/*fastify.get("/admin", function (request, reply) {
   return reply.view("/src/db.hbs");
+});*/
+
+fastify.after(() => {
+  fastify.route({
+    method: 'GET',
+    url: '/admin',
+    onRequest: fastify.basicAuth,
+    handler: async (req, reply) => {
+      return reply.view("/src/db.hbs");
+    }
+  })
 });
 
 // Run the server and report out to the logs
