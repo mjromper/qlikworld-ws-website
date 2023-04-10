@@ -1,33 +1,32 @@
-const AWS = require("aws-sdk");
-const s3 = new AWS.S3();
-
+const AWS_S3 = require("@aws-sdk/client-s3");
+const s3 = new AWS_S3.S3Client({});
 
 async function  store( fileKey, data ) {
     let key = `datafiles/${fileKey}`;
-    // store something
-    var result = await s3.putObject({
+    let params = {
         Body: JSON.stringify(data, null, 2),
-        Bucket: process.env.CYCLIC_BUCKET_NAME || "cyclic-busy-plum-bull-robe-eu-north-1",
+        Bucket: process.env.CYCLIC_BUCKET_NAME,
         Key: key,
-    }).promise()
-    return result;
-
+    };
+    return await s3.send(new AWS_S3.PutObjectCommand(params));
 }
 
 async function  read( fileKey, isArray ) {
     let key = `datafiles/${fileKey}`;
-    try {
-        let my_file = await s3.getObject({
-            Bucket: process.env.CYCLIC_BUCKET_NAME || "cyclic-busy-plum-bull-robe-eu-north-1",
-            Key: key,
-        }).promise();
+    const command = new AWS_S3.GetObjectCommand({
+        Bucket: process.env.CYCLIC_BUCKET_NAME,
+        Key: key
+    });
 
-        return JSON.parse(my_file.Body.toString())
-    } catch (e) {
-        console.log("error", e);
+    try {
+        const response = await s3.send(command);
+        // The Body object also has 'transformToByteArray' and 'transformToWebStream' methods.
+        const str = await response.Body.transformToString();
+        return JSON.parse(str);
+    } catch (err) {
+        console.error(err);
         return isArray? [] : {};
-    };
-    
+    }  
 }
 
 
