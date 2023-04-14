@@ -27,9 +27,17 @@ function createCaptcha() {
 }
 
 function validateEmail() {
-  var mail = document.getElementById("email").value;
-  const regExp = /^.+@[^\.].*\.[a-z]{2,}$/;
-  if ( regExp.test(mail) ){  
+  const mail = document.getElementById("email").value;
+  const session = document.getElementById("session").value;
+  
+  const regExpEmbedded = /^.+@[^\.].*\.[a-z]{2,}$/;
+  const regExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  let expr = regExp;
+  
+  if (session === 'embedded') {
+    expr = regExpEmbedded;
+  }
+  if (expr.test(mail)) {
     return true;
   }
 
