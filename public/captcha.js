@@ -28,8 +28,8 @@ function createCaptcha() {
 
 function validateEmail() {
   var mail = document.getElementById("email").value;
-
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+  const regExp = /^.+@[^\.].*\.[a-z]{2,}$/;
+  if ( regExp.test(mail) ){  
     return true;
   }
 
