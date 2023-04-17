@@ -93,6 +93,7 @@ END Glitch hello-app default styles
 body {
   font-family: 'Source Sans Pro', sans-serif;
   background-color: var(--color-bg);
+  background: #006580;
 }
 
 .qlikLogo {
@@ -103,10 +104,12 @@ body {
 .wrapper {
   min-height: var(--wrapper-height);
   display: grid;
-  /*place-items: center;*/
+  /*place-items: center;
+  border: 5px solid #006580;*/
   max-width: 1000px;
-  border: 5px solid #006580;
+  
   margin: 0px auto;
+  background: white;
 }
 .content {
   display: flex;
