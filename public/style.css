@@ -108,7 +108,7 @@ body {
   border: 5px solid #006580;*/
   max-width: 1000px;
   
-  margin: 0px auto;
+  margin: 40px auto;
   background: white;
 }
 .content {
@@ -268,5 +268,8 @@ canvas{
 @media screen and (max-width: 700px) {
   .yourClass {
       display: none !important;
+  }
+  .wrapper {
+    margin: 0px auto;
   }
 }
