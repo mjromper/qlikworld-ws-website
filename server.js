@@ -73,7 +73,6 @@ fastify.get("/", async function (request, reply) {
       s.disabled = "disabled";
     } else {
       s.selected = "";
-      s.disabled = "";
     }
   });
 
