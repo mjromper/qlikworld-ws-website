@@ -51,15 +51,10 @@ fastify.register(require("@fastify/view"), {
   },
 });
 
-/**
- * Our home page route
- *
- * Returns src/index.hbs with data built into it
- */
 fastify.get("/", async function (request, reply) {
   
   
-  var sessions = await myS3.read( "sessions.json", true);
+  /*var sessions = await myS3.read( "sessions.json", true);
   
   var sessionId = request.query.session;
   var sessionName = null;
@@ -79,9 +74,11 @@ fastify.get("/", async function (request, reply) {
   let params = { sessions: sessions, sessionId: sessionName? sessionId : "main", sessionName: sessionName };
 
   return reply.view("/src/index.hbs", params);
+  */
+  return reply.view("/src/thanks.hbs", {});
 });
 
-
+/*
 fastify.get("/error", function (request, reply) {
   return reply.view("/src/result.hbs", {"error": true});
 });
@@ -91,11 +88,6 @@ fastify.get("/done", function (request, reply) {
 });
 
 
-/**
- * Our POST route to handle and react to form submissions
- *
- * Accepts body data indicating the user choice
- */
 fastify.post("/submit", async function (request, reply) {
   
   var sDetails = await myS3.read( "session-details.json");
@@ -134,6 +126,7 @@ fastify.post("/submit", async function (request, reply) {
     return reply.redirect("/done");
   }
 });
+*/
 
 
 /**
