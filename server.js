@@ -59,6 +59,7 @@ fastify.register(require("@fastify/view"), {
 fastify.get("/", async function (request, reply) {
   
   
+  var hostname = request.protocol + "://" +request.hostname;
   var sessions = await myS3.read( "sessions.json", true);
   
   var sessionId = request.query.session;
@@ -76,7 +77,7 @@ fastify.get("/", async function (request, reply) {
     }
   });
 
-  let params = { sessions: sessions, sessionId: sessionName? sessionId : "main", sessionName: sessionName };
+  let params = { sessions: sessions, sessionId: sessionName? sessionId : "main", sessionName: sessionName, hostname: hostname };
 
   return reply.view("/src/index.hbs", params);
 });
@@ -184,7 +185,7 @@ fastify.after(() => {
 
 // Run the server and report out to the logs
 fastify.listen(
-  { port: process.env.PORT, host: "0.0.0.0" },
+  { port: process.env.PORT || 3000, host: "0.0.0.0" },
   function (err, address) {
     if (err) {
       console.error(err);

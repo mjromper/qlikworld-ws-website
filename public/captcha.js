@@ -73,12 +73,14 @@ function onSessionChange() {
   var d = document.getElementById("session");
   var value = d.value;
   var text = "";
-  console.log(text, d);
   if (!value || value=="") {
     value = "main";
   } else {
     text = d.options[d.selectedIndex].text;
   }
   document.getElementById("qrcode").src = "/img/"+value+".png";
+
+  var hostname = window.location.protocol + "//" + window.location.host + "/?session="+value;
+  document.getElementById("qrcode").src = "https://quickchart.io/qr?size=300&text="+hostname;
   document.getElementById("qrcode-caption").innerText = text;
 }
