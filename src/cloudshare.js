@@ -100,7 +100,7 @@ async function _addUser(classId, email) {
 
 var addStudentToClass = async function (details, email) {
   
-  var classId = details.classId;
+  var classId = details.cloudshareClassId;
   console.log(`Executed 'Add Student' to class '${classId}' for user '${email}'`);
   
   var students = await _getAllStudentsInClass(classId);

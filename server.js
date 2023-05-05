@@ -5,6 +5,8 @@ var automations = require("./src/automations.js");
 var fs = require('fs');
 var myS3 = require('./src/s3.js');
 const axios = require("axios");
+const db = require('./src/db/mongo.js');
+
 
 
 //const DATAFOLDER = process.env.DATAFOLDER || './.data';
@@ -59,14 +61,17 @@ fastify.register(require("@fastify/view"), {
 fastify.get("/", async function (request, reply) {
   
   
+  var sessions = await db.session.get();
+  sessions = sessions.results;
+
   var hostname = request.protocol + "://" +request.hostname;
-  var sessions = await myS3.read( "sessions.json", true);
+  //var sessions = await myS3.read( "sessions.json", true);
   
   var sessionId = request.query.session;
   var sessionName = null;
   sessions.forEach(function(s){
-    if (sessionId && s.id === sessionId) {
-      sessionName = s.name;
+    if (sessionId && s._id.toString() === sessionId) {
+      sessionName = s.title;
       s.selected = "selected";
       s.disabled = "";
     } else if(sessionId) {
@@ -99,14 +104,16 @@ fastify.get("/done", function (request, reply) {
  */
 fastify.post("/submit", async function (request, reply) {
   
-  var sDetails = await myS3.read( "session-details.json");
+  
   
   var email = request.body.email;
   var sessionId = request.body.session;
 
-  console.log(`Event for sessionId '${sessionId}' and user '${email}'`);
+  var session = await db.session.getById(sessionId);
+  var details = session.details;
 
-  var details = sDetails[sessionId];
+  console.log(`Event for sessionId '${sessionId}' and user '${email}'`, details);
+
   var result1, result2;
   
   axios({
@@ -122,13 +129,14 @@ fastify.post("/submit", async function (request, reply) {
     }
   });
 
-  if (details && details['classId'] ) {
+  
+  if (details && details['cloudshareClassId'] ) {
     result1 = await cloudshare.addStudentToClass(details, email);
   } 
-  if (details && details['url']) {
+  if (details && details['qaUrl'] && details['qaToken']) {
     result2 = await automations.runQlikAutomation(details, email);
   }
-
+  
   if (result1 && result1.error || result2 && result2.error) {
     return reply.redirect("/error");
   } else {
@@ -144,10 +152,8 @@ fastify.post("/submit", async function (request, reply) {
  */
 fastify.get("/api/sessions", async function (request, reply) {
   
-  var sessions = await myS3.read( "sessions.json", true);
-  var details = await myS3.read( "session-details.json");
-  
-  return reply.send({sessions: sessions, details: details});
+  var sessions = await db.session.get();  
+  return reply.send({sessions: sessions});
 });
 
 fastify.post("/api/sessions", async function (request, reply) {
@@ -167,6 +173,18 @@ fastify.post("/api/sessions", async function (request, reply) {
   
   return reply.send(out);
 });
+
+fastify.post("/api/session-details", async function (request, reply) {
+  const result = await db.sessionDetails.add(request.body);
+
+  const session = await db.session.add({
+    title: "After Hours Workshop",
+    details: result._id
+  });
+
+  return {details: result, session: session};
+});
+
 
 /*fastify.get("/admin", function (request, reply) {
   return reply.view("/src/db.hbs");

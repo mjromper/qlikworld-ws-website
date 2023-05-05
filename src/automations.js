@@ -2,8 +2,8 @@ const axios = require("axios");
 
 async function runQlikAutomation(details, email) {
   
-  let automationUrl = details.url;
-  let automationToken = details.token;
+  let automationUrl = details.qaUrl;
+  let automationToken = details.qaToken;
   
   try {
     var result = await axios({

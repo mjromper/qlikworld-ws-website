@@ -53,7 +53,7 @@
           <select onChange="onSessionChange();" class="lui-select" id="session" name="session" required="required" style="width:300px">
             <option value="">-- Select --</option>
             {{#each sessions}}
-            <option value="{{this.id}}" {{this.disabled}} {{this.selected}}>{{this.name}}</option>
+            <option value="{{this._id}}" {{this.disabled}} {{this.selected}}>{{this.title}}</option>
             {{/each}}
 
           </select>

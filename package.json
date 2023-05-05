@@ -12,11 +12,13 @@
     "@fastify/formbody": "^7.4.0",
     "@fastify/static": "^6.6.0",
     "@fastify/view": "^7.3.0",
+    "@hapi/boom": "^10.0.1",
     "axios": "1.2.2",
     "fastify": "^4.11.0",
     "handlebars": "^4.7.7",
     "js-sha1": "^0.6.0",
-    "leonardo-ui": "^1.7.1"
+    "leonardo-ui": "^1.7.1",
+    "mongoose": "^7.1.0"
   },
   "engines": {
     "node": "14.x"
